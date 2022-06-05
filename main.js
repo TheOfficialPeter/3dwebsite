@@ -20,6 +20,7 @@ function loadShader(gl, type, source){
 		alert("An error occurec when compiling shaders");
 		return null;
 	}
+	return shader;
 }
 
 function main() {
