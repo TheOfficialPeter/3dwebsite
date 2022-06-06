@@ -5,20 +5,6 @@
 <body>
 	<h1 class='title'>This is a webgl test: </h1>
 	<canvas id="glCanvas" width="640" height="480"></canvas>
-	<script id="vertex-shader" type="notjs">
-		attribute vec4 aPosition;
-
-		void main() {
-			gl_Position = aPosition;
-		}
-	</script>
-	<script id="fragment-shader" type="notjs">
-		precision mediump float;
-
-		void main(){
-			gl_FragColor = vec4(1,0,0.5,1);
-		}
-	</script>
 	<script src="main.js"></script>
 </body>
 </html>
