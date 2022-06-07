@@ -1,7 +1,6 @@
-function main() {
-	/* Step1: Prepare the canvas and get WebGL context */
 
-	var canvas = document.getElementById('glCanvas');
+function main() {
+	 canvas = document.getElementById('glCanvas');
 	var gl = canvas.getContext('webgl');
 	
 	var vertices = [
