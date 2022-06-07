@@ -4,13 +4,25 @@ function main() {
 	var canvas = document.getElementById('glCanvas');
 	var gl = canvas.getContext('webgl');
 	
-	var vertices = [-0.5, 0.5, -0.5, -0.5, 0.0, -0.5,];
+	var vertices = [
+		-0.5, 0.5, 0.0,
+		-0.5, -0.5, 0.0,
+		0.5, -0.5, 0.0,
+		0.5, 0.5, 0.0,
+	];
 	
+	var indices = [3,2,1,3,1,0];
+
 	var vertex_buffer = gl.createBuffer();
+	var index_buffer = gl.createBuffer();
 
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 	gl.bindBuffer(gl.ARRAY_BUFFER, null);
+
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
 
 	var vertCode =
 	'attribute vec2 coordinates;' + 
@@ -34,14 +46,17 @@ function main() {
 
 	gl.useProgram(shaderProgram);
 
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
 	gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
 
+	gl.enable(gl.DEPTH_TEST);
+
 	var coord = gl.getAttribLocation(shaderProgram, "coordinates");
-	gl.vertexAttribPointer(coord, 2, gl.FLOAT, false, 0, 0);
+	gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
 	gl.enableVertexAttribArray(coord);
 	
 	gl.viewport(0,0,canvas.width,canvas.height);
-	gl.drawArrays(gl.TRIANGLES, 0, 3);
+	gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT, 3);
 }
 
 window.onload = main;
