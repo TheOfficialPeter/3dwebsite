@@ -57,11 +57,7 @@ function load() {
     gl.vertexAttribPointer(origin, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(origin);
 
-    gl.clearColor(0,0,0,1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    
-    gl.viewport(0,0,canv.width,canv.height);
-    gl.drawArrays(gl.TRIANGLE, 0, 3);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
 
 window.onload = load();
