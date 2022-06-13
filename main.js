@@ -13,29 +13,33 @@ function load() {
 
     var vertex_text = 
     `attribute vec4 position;
+    attribute vec3 vertColor;
+    varying vec3 fragColor; 
     
     void main(){
+        fragColor = vertColor;
         gl_Position = position;
     }`;
 
     var fragment_text = 
     `precision mediump float;
+
+    varying vec3 fragColor;
     
     void main(){
-        gl_FragColor = vec4(255, 0, 0, 1);
+        gl_FragColor = vec4(fragColor, 1);
     }`;
 
     var vertices = [
-        -0.5, 0.5,
-        -0.5, -0.5,
-        0.0, -0.5,
+        0.5, 0.5,   0, 0, 0,
+        -0.5, 0.5,  .5, .5, .5,
+        0.0, -0.5,  .5, .5, .5
     ];
 
     var vBuff = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuff);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
-    gl.bindBuffer(gl.ARRAY_BUFFER, null);
-
+    
     var vertex_shader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertex_shader, vertex_text);
     gl.compileShader(vertex_shader);
@@ -51,11 +55,13 @@ function load() {
     gl.linkProgram(program);
     gl.useProgram(program);
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, vBuff);
-
     var origin = gl.getAttribLocation(program, "position");
-    gl.vertexAttribPointer(origin, 2, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(origin, 2, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
     gl.enableVertexAttribArray(origin);
+
+    var color = gl.getAttribLocation(program, "vertColor");
+    gl.vertexAttribPointer(color, 3, gl.FLOAT, false, 5 * Float32Array.BYTES_PER_ELEMENT, 0);
+    gl.enableVertexAttribArray(color);
 
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 }
