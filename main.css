@@ -1,3 +1,5 @@
 .title {
 	font-family: monospace;
+	text-align: center;
+	text-shadow: 0 2px 20px black;
 }
