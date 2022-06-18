@@ -1,5 +1,41 @@
-.title {
-	font-family: monospace;
-	text-align: center;
-	text-shadow: 0 2px 20px black;
+body {
+	background-color: #2e2e2e;
+	color: white;
+}
+
+.nav {
+	list-style-type: none;
+	font-family: Arial;
+	color: white;
+}
+
+.nav-title {
+	position: absolute;
+	left: 50px;
+	cursor: pointer;
+}
+
+.nav-item-1 {
+	position: absolute;
+	right: 30px;
+	cursor: pointer;
+	color: white;
+}
+
+.nav-item-2 {
+	position: absolute;
+	right: 200px;
+	cursor: pointer;
+	color: white;
+}
+
+.page-2 {
+	position: absolute;
+	top: 700px;
+	left: 0px;
+	right: 0px;
+	background-color: rgb(200,200,200);
+	box-shadow: 0 -10px 100px orange;
+	padding-top: 20px;
+	padding-bottom: 50px;
 }
