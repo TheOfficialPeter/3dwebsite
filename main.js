@@ -1,11 +1,26 @@
+var x = 0;
+
+function animate(vertices, vertex_buffer)
+{
+	x += 0.005;
+	gl.enable(gl.DEPTH_TEST);
+	gl.clearColor(x,x,x,1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+	gl.viewport(0,0,canvas.width,canvas.height);
+	gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT,0);
+	window.requestAnimationFrame(animate, vertices, vertex_buffer);
+	//animate(0);
+	//console.log("Running twice check for loop print");
+}
+
 function load(){		
 		var canvas = document.getElementById('canvas');
         gl = canvas.getContext('experimental-webgl');
 
         var vertices = [
-           -0.5,0.5,0.0,
+           -0.5,1,0.0,
            -0.5,-0.5,0.0,
-           0.5,-0.5,0.0,
+           0.5,-1,0.0,
            0.5,0.5,0.0
         ];
 
@@ -33,7 +48,7 @@ function load(){
 
         var fragCode =
            'void main(void) {' +
-              ' gl_FragColor = vec4(0.0, 0.0, 0.0, 0.1);' +
+              ' gl_FragColor = vec4(0, 0, 0, 1);' +
            '}';
 
         var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -52,11 +67,8 @@ function load(){
         var coord = gl.getAttribLocation(shaderProgram, "coordinates");
         gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(coord);
-
-        gl.enable(gl.DEPTH_TEST);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-		gl.viewport(0,0,canvas.width,canvas.height);
-		gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT,0);
+		
+        animate(vertices, vertex_buffer);
 }
 
 window.onload = load();
