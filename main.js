@@ -1,17 +1,6 @@
 var x = 0;
 
-function animate(vertices, vertex_buffer)
-{
-	x += 0.005;
-	gl.enable(gl.DEPTH_TEST);
-	gl.clearColor(x,x,x,1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-	gl.viewport(0,0,canvas.width,canvas.height);
-	gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT,0);
-	window.requestAnimationFrame(animate, vertices, vertex_buffer);
-	//animate(0);
-	//console.log("Running twice check for loop print");
-}
+
 
 function load(){		
 		var canvas = document.getElementById('canvas');
@@ -68,7 +57,26 @@ function load(){
         gl.vertexAttribPointer(coord, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(coord);
 		
-        animate(vertices, vertex_buffer);
+		function animate()
+		{
+			vertices[1] = 0;
+			gl.useProgram(shaderProgram);
+			gl.enableVertexAttribArray(coord);
+			gl.bindBuffer(gl.ARRAY_BUFFER, vertex_buffer);
+			x += 0.005;
+			gl.enable(gl.DEPTH_TEST);
+			gl.clearColor(x,x,x,1);
+			gl.clear(gl.COLOR_BUFFER_BIT);
+			gl.viewport(0,0,canvas.width,canvas.height);
+			gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_SHORT,0);
+			window.requestAnimationFrame(function(){
+				animate(vertices, vertex_buffer);
+			});
+			//animate(0);
+			//console.log("Running twice check for loop print");
+		}
+
+		animate();
 }
 
 window.onload = load();
